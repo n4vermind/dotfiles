@@ -1,0 +1,57 @@
+.theme-dark {
+    --background-tertiary: #131517;
+    --background-secondary: #131517;
+    --background-secondary-alt: #131517;
+    --background-primary: #131517;
+    --channeltextarea-background: #282a2e;
+    --background-accent: #81a2be;
+    --background-modifier-hover: #282a2e;
+    --background-modifier-active: #282a2e;
+    --background-modifier-selected: #282a2e;
+    --deprecated-card-bg: #131517;
+    --background-floating: #282a2e;
+    --deprecated-quickswitcher-input-background:#c5c8c6;
+    --scrollbar-auto-thumb: #373b41;
+    --scrollbar-auto-track: #282a2e;
+    --scrollbar-thin-thumb: #373b41;
+    --spotify-color: #81a2be;
+    --elevation-low: none;
+}
+
+.tabBody-3YRQ8W {
+    background-color: #131517;
+}
+
+/* Auto Hide by \xynstr#0300 */
+.sidebar-2K8pFh:hover {
+    width: 240px !important;
+    transition: 0.1s ease !important;
+    transition-delay: 0.3s !important;
+}
+/* Detects screen size to show channels if screen is big enough */
+@media screen and (max-width: 1100px) {
+    .sidebar-2K8pFh {
+        width: 0px !important;
+        transition: 0.3s ease !important;
+        position: fixed !important;
+        height: calc(100% - 47.988px) !important;
+        z-index: 1 !important;
+        bottom: 0px !important;
+    }
+    .wrapper-3NnKdC:hover + .base-3dtUhz > .content-98HsJk > .sidebar-2K8pFh {
+        width: 240px !important;
+    }
+    .sidebar-2K8pFh:hover {
+        width: 240px !important;
+    }
+}
+
+/* Hide mute unmute icon on server header */
+.toolbar-1t6TWx > div.clickable-3rdHwn.iconWrapper-2OrFZ1:nth-of-type(2) {
+    display: none !important;
+}
+
+/* Hide "Help" icon on server header */
+.toolbar-1t6TWx > .anchorUnderlineOnHover-2ESHQB.anchor-3Z-8Bb {
+    display: none !important;
+}

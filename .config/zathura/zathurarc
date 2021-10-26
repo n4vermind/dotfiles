@@ -1,0 +1,64 @@
+# Open document in fit-width mode by default
+set adjust-open "best-fit"
+
+# One page per row by default
+set pages-per-row 1
+
+# Clipboard
+set selection-clipboard clipboard
+
+# Stop at page boundries
+set scroll-page-aware "true"
+set smooth-scroll "true"
+set scroll-full-overlap 0.01
+set scroll-step 100
+
+# yes
+set window-title-home-tilde true
+set statusbar-home-tilde true
+
+# Zoom settings
+set zoom-min 10
+set guioptions ""
+
+# zathurarc-tomorrow-night
+
+set font "Iosevka 9"
+set default-bg "#131517" #00
+set default-fg "#c5c8c6" #01
+
+set statusbar-fg "#B0B0B0" #04
+set statusbar-bg "#202020" #01
+
+set inputbar-bg "#151515" #00 currently not used
+set inputbar-fg "#FFFFFF" #02
+
+set notification-error-bg "#AC4142" #08
+set notification-error-fg "#151515" #00
+
+set notification-warning-bg "#AC4142" #08
+set notification-warning-fg "#151515" #00
+
+set highlight-color "#F4BF75" #0A
+set highlight-active-color "#6A9FB5" #0D
+
+set completion-highlight-fg "#151515" #02
+set completion-highlight-bg "#90A959" #0C
+
+set completion-bg "#303030" #02
+set completion-fg "#E0E0E0" #0C
+
+set notification-bg "#90A959" #0B
+set notification-fg "#151515" #00
+
+set recolor "true"
+set recolor-lightcolor "#c5c8c6" #00
+set recolor-darkcolor "#131517" #06
+set recolor-keephue "true"
+
+
+set render-loading "false"
+set adjust-open width
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen

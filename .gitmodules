@@ -1,0 +1,9 @@
+[submodule ".config/awesome/lib/bling"]
+	path = .config/awesome/lib/bling
+	url = https://github.com/BlingCorp/bling
+[submodule ".config/awesome/lib/rubato"]
+	path = .config/awesome/lib/rubato
+	url = https://github.com/andOrlando/rubato
+[submodule ".config/awesome/lib/layout-machi"]
+	path = .config/awesome/lib/layout-machi
+	url = https://github.com/xinhaoyuan/layout-machi

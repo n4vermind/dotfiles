@@ -1,0 +1,71 @@
+!! Tomorrow night colorscheme
+*foreground:   #c5c8c6
+*background:   #131517
+*cursorColor:  #c5c8c6
+
+*color0:       #131517
+*color8:       #969896
+
+*color1:       #cc6666
+*color9:       #cc6666
+
+*color2:       #b5bd68
+*color10:      #b5bd68
+
+*color3:       #f0c674
+*color11:      #f0c674
+
+*color4:       #81a2be
+*color12:      #81a2be
+
+*color5:       #b294bb
+*color13:      #b294bb
+
+*color6:       #8abeb7
+*color14:      #8abeb7
+
+*color7:       #c5c8c6
+*color15:      #ffffff
+
+*color16:      #de935f
+*color17:      #a3685a
+*color18:      #282a2e
+*color19:      #373b41
+*color20:      #b4b7b4
+*color21:      #e0e0e0
+
+!! URxvt
+URxvt.font: xft:MotoyaLMaru:size=9
+URxvt.boldFont: 
+URxvt.letterSpace: 0
+URxvt.lineSpace: 2
+URxvt.internalBorder: 28
+URxvt.cursorBlink: true
+URxvt.cursorUnderline: false
+URxvt.saveline: 2048
+URxvt.scrollBar: false
+URxvt.termName: rxvt-256color
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! URxvt extension
+URxvt.perl-ext-common: default,url-select,resize-font,prevent-close
+URxvt.keysym.Control-Shift-C: eval:selection_to_clipboard
+URxvt.keysym.Control-Shift-V: eval:paste_clipboard
+URxvt.keysym.Control-Up: eval:scroll_up 1
+URxvt.keysym.Control-Down: eval:scroll_down 1
+URxvt.keysym.Control-Home: eval:scroll_to_top
+URxvt.keysym.Control-End: eval:scroll_to_bottom
+
+! Resize Font Ext
+URxvt.resize-font.step: 1
+URxvt.keysym.Control-minus: resize-font:smaller
+URxvt.keysym.Control-plus: resize-font:bigger
+URxvt.keysym.Control-equal: resize-font:reset
+URxvt.keysym.Control-question: resize-font:show
+
+! URL Select Ext
+URxvt.keysym.Control-Shift-U: url-select:select_next
+URvxt.url-select.button: 2
+URxvt.url-select.launcher: qutebrowser
+URxvt.url-select.underline: true
