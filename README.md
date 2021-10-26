@@ -1,6 +1,5 @@
 <h1 align="center">.files</h1>
 <p align="center"><i>ricing tross.. kerjanya kapan</i></p>
----
 
 ### Programs
 - Window Manager: awesome
