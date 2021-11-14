@@ -244,7 +244,7 @@ col() {
 
 print() {
 	[ "$2" ] && printf '\033[9%sm%6s\033[0m%b%s\n' \
-		"${accent:-4}" "$1" "${separator:- ~ }" "$2"
+		"${accent:-4}" "$1" "${separator:- | }" "$2"
 }
 
 # default value
@@ -256,15 +256,15 @@ for i in $info; do
 		os) print os "$ID";;
 		sh) print sh "${SHELL##*/}";;
 		wm) print wm "${wm##*/}";;
-		# up) print up "$up";;
-		# gtk) print gtk "${gtk# }";;
-		# cpu) print cpu "$vendor$cpu";;
-		# mem) print mem "$mem";;
-		# host) print host "$model";;
-		# kern) print kern "$kernel";;
-		# pkgs) print pkgs "$pkgs";;
-		# term) print term "$term";;
-		# user) printf '%7s@%s\n' "$USER" "$host";;
+		up) print up "$up";;
+		gtk) print gtk "${gtk# }";;
+		cpu) print cpu "$vendor$cpu";;
+		mem) print mem "$mem";;
+		host) print host "$model";;
+		kern) print kern "$kernel";;
+		pkgs) print pkgs "$pkgs";;
+		term) print term "$term";;
+		user) printf '%7s@%s\n' "ner0z" "$host";;
 		col) col;;
 	esac
 done

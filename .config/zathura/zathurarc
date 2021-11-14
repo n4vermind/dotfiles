@@ -21,39 +21,39 @@ set statusbar-home-tilde true
 set zoom-min 10
 set guioptions ""
 
-# zathurarc-tomorrow-night
+# colorscheme
 
 set font "Iosevka 9"
-set default-bg "#131517" #00
-set default-fg "#c5c8c6" #01
+set default-bg "#061115" #00
+set default-fg "#d9d7d6" #01
 
-set statusbar-fg "#B0B0B0" #04
-set statusbar-bg "#202020" #01
+set statusbar-fg "#a6a9b7" #04
+set statusbar-bg "#111114" #01
 
-set inputbar-bg "#151515" #00 currently not used
-set inputbar-fg "#FFFFFF" #02
+set inputbar-bg "#111114" #00 currently not used
+set inputbar-fg "#d9d7d6" #02
 
-set notification-error-bg "#AC4142" #08
-set notification-error-fg "#151515" #00
+set notification-error-bg "#f16269" #08
+set notification-error-fg "#111114" #00
 
-set notification-warning-bg "#AC4142" #08
-set notification-warning-fg "#151515" #00
+set notification-warning-bg "#f16269" #08
+set notification-warning-fg "#111114" #00
 
-set highlight-color "#F4BF75" #0A
-set highlight-active-color "#6A9FB5" #0D
+set highlight-color "#e9967e" #0A
+set highlight-active-color "#79aaeb" #0D
 
-set completion-highlight-fg "#151515" #02
-set completion-highlight-bg "#90A959" #0C
+set completion-highlight-fg "#111114" #02
+set completion-highlight-bg "#8cd7aa" #0C
 
-set completion-bg "#303030" #02
-set completion-fg "#E0E0E0" #0C
+set completion-bg "#16161a" #02
+set completion-fg "#a6a9b7" #0C
 
-set notification-bg "#90A959" #0B
-set notification-fg "#151515" #00
+set notification-bg "#8cd7aa" #0B
+set notification-fg "#111114" #00
 
 set recolor "true"
-set recolor-lightcolor "#c5c8c6" #00
-set recolor-darkcolor "#131517" #06
+set recolor-lightcolor "#d9d7d6" #00
+set recolor-darkcolor "#061115" #06
 set recolor-keephue "true"
 
 

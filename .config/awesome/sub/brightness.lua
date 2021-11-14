@@ -1,6 +1,6 @@
 -- Provides:
--- stat::brightness
---    percentage (integer)
+-- signal::brightness
+--      percentage (integer)
 local awful = require("awful")
 
 -- Subscribe to backlight changes
@@ -19,7 +19,7 @@ local emit_brightness_info = function()
     awful.spawn.with_line_callback(brightness_script, {
         stdout = function(line)
             percentage = math.floor(tonumber(line))
-            awesome.emit_signal("stat::brightness", percentage)
+            awesome.emit_signal("signal::brightness", percentage)
         end
     })
 end

@@ -8,7 +8,6 @@ function run {
 }
 
 # music
-#killall mpd
 run mpd
 run mpDris2 # add playerctl support to mpd
 
@@ -16,7 +15,7 @@ run mpDris2 # add playerctl support to mpd
 # nitrogen  --restore
 
 # compositor
-run picom
+run picom --experimental-backends
 
 # redshift
 run redshift

@@ -1,14 +1,10 @@
--- Standard library
+-- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 
--- Theme library
+-- Theme handling library
 local beautiful = require("beautiful")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-
--- Widget library
-local wibox = require("wibox")
+local dpi = beautiful.xresources.apply_dpi
 
 -- Bling
 local bling = require("lib.bling")
@@ -19,6 +15,7 @@ local rubato = require("lib.rubato")
 
 -- Scratchpad
 ---------------
+
 local anim_y = rubato.timed {
     pos = 1090,
     rate = 60,
@@ -50,12 +47,12 @@ local discord_scratch = bling.module.scratchpad:new {
 }
 
 local spotify_scratch = bling.module.scratchpad:new {
-    command = "spotify",
+    command = "LD_PRELOAD=/usr/local/lib/spotify-adblock.so spotify",
 	rule = {instance = "spotify"},
     sticky = false,
     autoclose = false,
     floating = true,
-    geometry = {x=150, y=45, height=660, width=960},
+    geometry = {x=150, y=65, height=660, width=960},
     reapply = true,
     dont_focus_before_close = false,
     rubato = {y = anim_y}
@@ -64,5 +61,6 @@ local spotify_scratch = bling.module.scratchpad:new {
 
 -- Signals
 ------------
+
 awesome.connect_signal("scratch::discord", function() discord_scratch:toggle() end)
 awesome.connect_signal("scratch::spotify", function() spotify_scratch:toggle() end)

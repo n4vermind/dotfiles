@@ -1,41 +1,33 @@
 configuration {
-	modi: "run,drun,Kill:~/.config/rofi/scripts/kill.sh";
-	width: 24;
-	lines: 8;
-	font: "Iosevka 9";
-	terminal: "urxvt";
-	disable-history: false;
-	sidebar-mode: true;
-	tokenize: true;
-	m: "-5";
-	line-margin: 4;
-	line-padding: 2;
-	separator-style: "none";
-	hide-scrollbar: true;
-	window-format: "{w} {c}";
-	display-drun: "Apps";
-	display-run: "Run";
-	display-window: "Windows";
+	modi:				    "run,drun,Kill:~/.config/rofi/scripts/kill.sh";
+	font:				    "Iosevka 9";
+	display-drun: 			"Apps";
+	display-run: 			"Run";
+	drun-display-format:    "{name}";
+	sidebar-mode: 			true;
 }
+
+@theme "/dev/null"
 
 * {
-	bg: #131517;
-	fg: #c5c8c6;
-	accent: #81a2be;
-	button: #c5c8c6;
+	bg:				#061115;
+	fg:				#d9d7d6;
+	accent:			#1c252c;
+    inactive:       #484e5b;
+    hightlight:     #6791c9;
 
 	background-color: @bg;
-	text-color: @fg;
+	text-color:	@fg;
+}
+window {
+    width: 30%;
+	border: 2px;
+    border-radius: 4px;
+	border-color: @accent;
 }
 
-window {
-	padding: 30px;
-	/* border-radius: 4px; */
-	/* location: southwest; */
-	/* x-offset: 10px; */
-	/* y-offset: -50px; */
-	border: 2px;
-	border-color: @fg;
+inputbar {
+    margin: 24px 0 24px 24px;
 }
 
 prompt, entry {
@@ -43,37 +35,55 @@ prompt, entry {
 	padding: 8px;
 }
 
-
-entry {
-    /* border-radius : 0 4px 4px 0; */
-    margin: 0 0 10px 0;
+prompt {
+    background-color: @accent;
+    text-color: @hightlight;
+	border-radius: 4px 0 0 4px;
 }
 
-prompt {
-    /* background-color: @accent; */
-    text-color: @accent;
-    margin: 0 0 10px 0;
-	/* border-radius: 2px 0 0 2px; */
+listview {
+	columns: 1;
+	lines: 12;
+	cycle: false;
+	dynamic: true;
+	layout: vertical;
+    margin: 0 24px 14px 24px;
 }
 
 element {
-	padding: 6px 4px;
+	orientation: vertical;
+	padding: 8px 8px;
+}
+
+element-text {
+    expand: true;
+	vertical-align: 0.5;
+	background-color: inherit;
+	text-color: inherit;
 }
 
 element selected {
-	background-color: @fg;
-	text-color: @bg;
-	/* border-radius: 2px; */
+	background-color: @accent;
+	text-color: @fg;
+	border-radius: 4px;
+}
+
+mode-switcher {
+    background-color: @accent;
+    padding: 0 0 4px 0;
 }
 
 button {
-    padding: 6px;
-    margin: 10px 0 0 0;
-	/* border-radius: 2px; */
+    text-color: @inactive;
+	background-color: @accent;
+    padding: 6px 6px 6px 6px;
+	border-radius: 0;
+    horizontal-align: 0.5;
 }
 
 button selected {
-	background-color: @accent;
-	text-color: @bg;
-	padding: 4px;
+    text-color: @hightlight;
+    background-image: url("img/bt.png");
+	border-radius: 0;
 }
+

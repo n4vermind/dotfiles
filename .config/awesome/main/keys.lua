@@ -1,9 +1,10 @@
--- Standard library
+-- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-
--- Hotkeys library
 local hotkeys_popup = require("awful.hotkeys_popup")
+
+-- Theme handling library
+local beautiful = require("beautiful")
 
 -- Theme library
 local beautiful = require("beautiful")
@@ -53,12 +54,24 @@ keys.globalkeys = gears.table.join(
     end,
     {description = "Spawn launcher", group = "App"}),
 
+	-- Sidebar
+	awful.key({mod}, "z", function()
+        sidebar_toggle()
+    end,
+    {description = "Toggle sidebar", group = "App"}),
+
+	-- Powermenu
+	awful.key({mod}, "x", function()
+        notifs_toggle()
+    end,
+    {description = "Toggle powermenu", group = "App"}),
+
     -- Hotkeys menu
     awful.key({mod}, "\\",
         hotkeys_popup.show_help,
     {description = "Hotkeys menu", group = "App"}),
 
----------
+
 ---- WM
 
     -- Toggle titlebar
@@ -94,7 +107,7 @@ keys.globalkeys = gears.table.join(
 		awesome.quit,
 	{description = "Quit awesome", group = "WM"}),
 
--------------
+
 ---- Window
 
     -- Focus client by direction
@@ -151,7 +164,15 @@ keys.globalkeys = gears.table.join(
 	end,
 	{description = "Switch to prev layout", group = "Window"}),
 
-------------
+	-- Un-minimize windows
+	awful.key({mod, shift}, "n", function()
+		local c = awful.client.restore()
+		if c then
+			c:activate{raise = true, context = "key.unminimize"}
+		end
+	end),
+
+
 ---- Bling
 
     -- Add client to tabbed layout
@@ -184,7 +205,7 @@ keys.globalkeys = gears.table.join(
 	end,
 	{description = "Toggle music scratchpad", group = "Bling"}),
 
------------
+
 ---- Misc
 
     -- Screen brightness
@@ -252,6 +273,7 @@ keys.globalkeys = gears.table.join(
 
 -- Client key bindings
 ------------------------
+
 keys.clientkeys = gears.table.join(
 
     -- Move or swap by direction
@@ -309,14 +331,6 @@ keys.clientkeys = gears.table.join(
 		client.focus.minimized = true
 	end),
 
-	-- Un-minimize windows
-	awful.key({mod, shift}, "n", function()
-		local c = awful.client.restore()
-		if c then
-			c:activate{raise = true, context = "key.unminimize"}
-		end
-	end),
-
     -- Keep on top
     awful.key({mod}, "p", function (c)
         c.ontop = not c.ontop
@@ -339,10 +353,7 @@ keys.clientkeys = gears.table.join(
 
 	-- Window switcher
 	awful.key({mod}, "Tab", function()
-		awful.client.focus.history.previous()
-		if client.focus then
-			client.focus:raise()
-		end
+        awesome.emit_signal("bling::window_switcher::turn_on")
 	end)
 
 )
@@ -350,6 +361,7 @@ keys.clientkeys = gears.table.join(
 
 -- Move through workspaces
 ----------------------------
+
 for i = 1, 10 do
     keys.globalkeys = gears.table.join(keys.globalkeys,
 
@@ -383,6 +395,7 @@ end
 
 -- Mouse bindings on desktop
 ------------------------------
+
 keys.desktopbuttons = gears.table.join(
 
     -- Left click
@@ -391,6 +404,11 @@ keys.desktopbuttons = gears.table.join(
         if mymainmenu then
             mymainmenu:hide()
         end
+    end),
+
+    -- Middle click
+    awful.button({}, 2, function()
+        sidebar_toggle()
     end),
 
     -- Right click
@@ -403,6 +421,7 @@ keys.desktopbuttons = gears.table.join(
 
 -- Mouse buttons on the client
 --------------------------------
+
 keys.clientbuttons = gears.table.join(
 
 	-- Focus to client
@@ -425,6 +444,7 @@ keys.clientbuttons = gears.table.join(
 
 -- Mouse buttons on the taglist
 ---------------------------------
+
 keys.taglistbuttons = gears.table.join(
 
     -- Move to selected tag
@@ -453,6 +473,7 @@ keys.taglistbuttons = gears.table.join(
 
 -- Mouse buttons on the tasklist
 ----------------------------------
+
 keys.tasklistbuttons = gears.table.join(
 
     -- Left click
@@ -487,6 +508,7 @@ keys.tasklistbuttons = gears.table.join(
 
 -- Mouse buttons on the layoutbox
 -----------------------------------
+
 keys.layoutboxbuttons = gears.table.join(
 
     -- Left click
@@ -512,6 +534,7 @@ keys.layoutboxbuttons = gears.table.join(
 
 -- Mouse buttons on the titlebar
 ----------------------------------
+
 keys.titlebarbuttons = gears.table.join(
 
     -- Left click

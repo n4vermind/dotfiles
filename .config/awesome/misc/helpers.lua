@@ -11,6 +11,10 @@ local naughty = require("naughty")
 
 local helpers = {}
 
+
+-- Helpers
+---------------------------
+
 -- Create rounded rectangle shape (in one line)
 helpers.rrect = function(radius)
     return function(cr, width, height)
@@ -171,27 +175,6 @@ function helpers.tag_back_and_forth(tag_index)
     end
 end
 
--- Notify DWIM (Do What I Mean):
--- Create or update notification automagically. Requires storing the
--- notification in a variable.
--- Example usage:
---     local my_notif = notifications.notify_dwim({ title = "hello", message = "there" }, my_notif)
---     -- After a while, use this to update or recreate the notification if it is expired / dismissed
---     my_notif = notifications.notify_dwim({ title = "good", message = "bye" }, my_notif)
-function helpers.notify(args, notif)
-    local n = notif
-    if n and not n._private.is_destroyed and not n.is_expired then
-        notif.title = args.title or notif.title
-        notif.message = args.message or notif.message
-        -- notif.text = args.text or notif.text
-        notif.icon = args.icon or notif.icon
-        notif.timeout = args.timeout or notif.timeout
-    else
-        n = naughty.notification(args)
-    end
-    return n
-end
-
 -- Resize DWIM (Do What I Mean)
 -- Resize client or factor
 -- Constants --
@@ -199,7 +182,7 @@ local floating_resize_amount = dpi(20)
 local tiling_resize_factor= 0.05
 ---------------
 function helpers.resize_client(c, direction)
-    if c and c.floating then
+    if c and c.floating or awful.layout.get(mouse.screen) == awful.layout.suit.floating then
         if direction == "up" then
             c:relative_move(  0,  0, 0, -floating_resize_amount)
         elseif direction == "down" then
@@ -275,6 +258,18 @@ function helpers.volume_control(step)
     awful.spawn.with_shell(cmd)
 end
 
+function helpers.music_control(state)
+	local cmd
+	if state == "toggle" then
+		cmd = "playerctl -p spotify,mpd play-pause"
+	elseif state == "prev" then
+		cmd = "playerctl -p spotify,mpd previous"
+	elseif state == "next" then
+		cmd = "playerctl -p spotify,mpd next"
+	end
+	awful.spawn.with_shell(cmd)
+end
+
 function helpers.send_key(c, key)
     awful.spawn.with_shell("xdotool key --window "..tostring(c.window).." "..key)
 end
@@ -286,6 +281,36 @@ end
 function helpers.fake_escape()
     root.fake_input('key_press', "Escape")
     root.fake_input('key_release', "Escape")
+end
+
+local prompt_font = beautiful.prompt_font or "sans bold 8"
+function helpers.prompt(action, textbox, prompt, callback)
+    if action == "run" then
+        awful.prompt.run {
+            prompt       = prompt,
+            -- prompt       = "<b>Run: </b>",
+            textbox      = textbox,
+            font = prompt_font,
+            done_callback = callback,
+            exe_callback = awful.spawn,
+            completion_callback = awful.completion.shell,
+            history_path = awful.util.get_cache_dir() .. "/history"
+        }
+    elseif action == "web_search" then
+        awful.prompt.run {
+            prompt       = prompt,
+            -- prompt       = '<b>Web search: </b>',
+            textbox      = textbox,
+            font = prompt_font,
+            history_path = awful.util.get_cache_dir() .. "/history_web",
+            done_callback = callback,
+            exe_callback = function(input)
+                if not input or #input == 0 then return end
+                awful.spawn.with_shell("noglob "..user.web_search_cmd.."'"..input.."'")
+                naughty.notify { title = "Searching the web for", text = input, icon = icons.image.firefox, urgency = "low" }
+            end
+        }
+    end
 end
 
 -- Given a `match` condition, returns an array with clients that match it, or
@@ -430,6 +455,25 @@ end
 function helpers.this_dir()
    local str = debug.getinfo(2, "S").source:sub(2)
    return str:match("(.*/)")
+end
+
+-- Determines how floating clients should be placed
+function helpers.floating_client_placement(c)
+    -- If the layout is floating or there are no other visible
+    -- clients, center client
+    if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
+        return awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
+    end
+
+    -- Else use this placement
+    local p = awful.placement.no_overlap + awful.placement.no_offscreen
+    return p(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
+end
+
+function helpers.centered_client_placement(c)
+    return gears.timer.delayed_call(function ()
+        awful.placement.centered(c, {honor_padding = true, honor_workarea=true})
+    end)
 end
 
 return helpers

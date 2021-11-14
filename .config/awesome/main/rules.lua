@@ -1,9 +1,12 @@
--- Standard library
+-- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 
--- Theme library
+-- Theme handling library
 local beautiful = require("beautiful")
+
+-- Helpers
+local helpers = require("misc.helpers")
 
 -- Keys
 local keys = require("main.keys")
@@ -15,6 +18,7 @@ local screen_height = awful.screen.focused().geometry.height
 
 -- Rules
 ----------
+
 awful.rules.rules = {
 	{
 		-- Global rules
@@ -30,8 +34,9 @@ awful.rules.rules = {
 			size_hints_honor = false,
 			honor_workarea = true,
 			honor_padding = true,
+            maximized = false,
 			titlebars_enabled = beautiful.titlebars_enabled,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen
+            placement = helpers.floating_client_placement
 		}
 	},
 
@@ -75,7 +80,7 @@ awful.rules.rules = {
                 "conversation",
             }
         },
-        properties = {placement = centered_client_placement},
+        properties = {placement = helpers.centered_client_placement},
     },
 
     {

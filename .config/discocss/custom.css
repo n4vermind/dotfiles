@@ -1,25 +1,25 @@
 .theme-dark {
-    --background-tertiary: #131517;
-    --background-secondary: #131517;
-    --background-secondary-alt: #131517;
-    --background-primary: #131517;
-    --channeltextarea-background: #282a2e;
-    --background-accent: #81a2be;
-    --background-modifier-hover: #282a2e;
-    --background-modifier-active: #282a2e;
-    --background-modifier-selected: #282a2e;
-    --deprecated-card-bg: #131517;
-    --background-floating: #282a2e;
+    --background-tertiary: #061115;
+    --background-secondary: #061115;
+    --background-secondary-alt: #061115;
+    --background-primary: #061115;
+    --channeltextarea-background: #101b1f;
+    --background-accent: #6791c9;
+    --background-modifier-hover: #101b1f;
+    --background-modifier-active: #101b1f;
+    --background-modifier-selected: #101b1f;
+    --deprecated-card-bg: #061115;
+    --background-floating: #101b1f;
     --deprecated-quickswitcher-input-background:#c5c8c6;
-    --scrollbar-auto-thumb: #373b41;
-    --scrollbar-auto-track: #282a2e;
-    --scrollbar-thin-thumb: #373b41;
-    --spotify-color: #81a2be;
+    --scrollbar-auto-thumb: #484e5b;
+    --scrollbar-auto-track: #101b1f;
+    --scrollbar-thin-thumb: #484e5b;
+    --spotify-color: #6791c9;
     --elevation-low: none;
 }
 
 .tabBody-3YRQ8W {
-    background-color: #131517;
+    background-color: #061115;
 }
 
 /* Auto Hide by \xynstr#0300 */

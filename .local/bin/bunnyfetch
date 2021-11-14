@@ -17,19 +17,24 @@ v=$'\e[7m'
 sep=
 s=$d$f0$sep$t
 
-w=
-wifiname="$(iwgetid | cut -d \" -f2)"
+o=os
+osname=artix
 
-h=
+w=
+# wifiname="$(iwgetid | cut -d \" -f2)"
+
+h=wm
 wmname="$(xprop -id $(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}') -notype -f _NET_WM_NAME 8t | grep "WM_NAME" | cut -f2 -d \")"
 
-k=
+k=kernel
 kernel="$(uname -r | cut -d '-' -f1)"
 
-r=
-resolution="$(xwininfo -root | grep geometry | awk '{print $2}' | cut -d + -f1)"
+r=res
+rx="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1)"
+ry="$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2)"
+resolution="$rx"x"$ry"
 
-sh=
+sh=shell
 shell=$(basename $SHELL)
 
 # (\ /)
@@ -40,13 +45,18 @@ shell=$(basename $SHELL)
 # ( . .)
 # c(")(")
 
+#  /\    /
+# (' )  (
+#  (  \  )
+#  /(__)/
+
 tput clear
 cat << EOF
 
-             $wmname
-   (\ /)     $kernel
-   ( $d. .$t)    $shell
-   c($f1"$t)($f1"$t)   $resolution
-             $wifiname
+             $f1$o      $t$osname
+   (\ /)     $f4$k  $t$kernel
+   ( $d. .$t)    $f3$sh   $t$shell
+   c($f1"$t)($f1"$t)   $d$f5$h      $t$wmname
+
 
 EOF

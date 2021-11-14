@@ -59,10 +59,10 @@ bar_spacing = 1
 ; method = alsa
 ; source = hw:Loopback,1
 
-; method = fifo
-; source = /tmp/mpd.fifo
-; sample_rate = 44100
-; sample_bits = 16
+method = fifo
+source = /tmp/mpd.fifo
+sample_rate = 44100
+sample_bits = 16
 
 ; method = shmem
 ; source = /squeezelite-AA:BB:CC:DD:EE:FF
@@ -123,14 +123,8 @@ bar_spacing = 1
 # You can define as many as 8 different colors. They range from bottom to top of screen
 gradient = 1
 gradient_count = 2
-gradient_color_1 = '#8abeb7'
-gradient_color_2 = '#b294bb'
-; gradient_color_3 = '#a6cc33'
-; gradient_color_4 = '#cccc33'
-; gradient_color_5 = '#cca633'
-; gradient_color_6 = '#cc8033'
-; gradient_color_7 = '#cc5933'
-; gradient_color_8 = '#cc3333'
+gradient_color_1 = '#67afc1'
+gradient_color_2 = '#bc83e3'
 
 
 
