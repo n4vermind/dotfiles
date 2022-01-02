@@ -1,6 +1,0 @@
-require("sub.battery")
-require("sub.brightness")
-require("sub.volume")
-require("sub.cpu")
-require("sub.disk")
-require("sub.playerctl")

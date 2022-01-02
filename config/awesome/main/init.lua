@@ -1,0 +1,6 @@
+require("main.keys")
+require("main.desktop")
+require("main.menu")
+require("main.rules")
+require("main.scratch")
+require("main.extras")

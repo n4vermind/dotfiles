@@ -1,0 +1,8 @@
+require("sub.battery")
+require("sub.brightness")
+require("sub.volume")
+require("sub.cpu")
+require("sub.ram")
+require("sub.todo")
+require("sub.weather")
+require("sub.playerctl")
