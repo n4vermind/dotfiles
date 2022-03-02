@@ -25,7 +25,7 @@ Feel free to take whatever you want here.
     ```shell
     $ paru -S awesome-git picom-jonaburg-fix alacritty rofi acpi acpid \ 
     inotify-tools polkit-gnome light pulseaudio xdotool maim wireless_tools\ 
-    playerctl mpdris2 mpc
+    playerctl mpdris2 mpc colord
     ```
 
 - Fonts
@@ -51,6 +51,7 @@ Feel free to take whatever you want here.
 ## Acknowledgements
 
 - Thanks to
+    + [rxyhn](https://github.com/rxyhn)
     + [javacafe01](https://github.com/JavaCafe01)
     + [elenapan](https://github.com/elenapan)
 
