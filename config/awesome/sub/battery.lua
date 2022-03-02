@@ -6,6 +6,8 @@
 
 local awful = require("awful")
 
+local batt_val = 0
+local batt_state = false
 local update_interval = 30
 
 -- Subscribe to power supply status changes with acpi_listen
@@ -24,8 +26,8 @@ awful.spawn.easy_async_with_shell("sh -c 'out=\"$(find /sys/class/power_supply/B
         return
     end
     -- Periodically get battery info
-    --awful.widget.watch("cat "..battery_file, update_interval, function(_, stdout)
-    awful.widget.watch("check-battery", update_interval, function(_, stdout)
+    awful.widget.watch("cat "..battery_file, update_interval, function(_, stdout)
+    -- awful.widget.watch("sh -c \"acpi | cut -d' ' -f 4 | cut -d% -f 1\"", update_interval, function(_, stdout)
         awesome.emit_signal("signal::battery", tonumber(stdout))
     end)
 end)

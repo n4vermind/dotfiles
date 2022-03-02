@@ -1,20 +1,11 @@
--- Standard awesome library
-local awful = require("awful")
-
 -- Notification handling library
 local naughty = require("naughty")
 
--- Bling
-local bling = require("lib.bling")
+-- Playerctl
+local playerctl = require("lib.bling").signal.playerctl.lib()
 
-bling.signal.playerctl.enable {
-    backend = "playerctl_lib",
-    ignore = {"firefox", "qutebrowser", "chromium", "brave"},
-    -- playerctl_position_update_interval = 1,
-    update_on_activity = true
-}
-
-awesome.connect_signal("bling::playerctl::title_artist_album",
-    function(title, artist, art_path)
-    naughty.notification({title = "Now Playing", text = artist .. " - " .. title, image = art_path})
+playerctl:connect_signal("metadata", function(_, title, artist, album_path, album, new, player_name)
+    if new == true then
+        naughty.notify({title = title, text = artist, image = album_path})
+    end
 end)

@@ -1,18 +1,31 @@
 #!/bin/bash
 
+<<screensht
+
+ _____ _____ _____ _____ _____ _____ _____ _____ _____
+|   __|     | __  |   __|   __|   | |   __|  |  |_   _|
+|__   |   --|    -|   __|   __| | | |__   |     | | |
+|_____|_____|__|__|_____|_____|_|___|_____|__|__| |_|
+      ~ Script to take screenshots with maim ~
+
+screensht
+
+
 # =============================================
 
+# Directory
 _SCREENSHOT_DIR_=$HOME/pictures/screenshots
-# _LOG_FILE_="$_SCREENSHOT_DIR_/.awesome-maim.log"
+_ORIGINAL_DIR_=$_SCREENSHOT_DIR_/original
 
-_FG_COLOR_='#1d1f21'
-_BG_COLOR_='#c5c8c6'
+# Color
+_FG_COLOR_='#101317'
+_BG_COLOR_='#d4d4d5'
 _BG_SIZE_=10
 
 # Border Size Applied when value greater than or equal 3
 _BORDER_SIZE_=0
 _SHADOW_SIZE_='50x10+0+10'  # [ weight ] x [ radius ] + [ horizontal ] x [ vertical ]
-_ROUNDED_CORNER_=4
+_ROUNDED_CORNER_=3
 
 # =============================================
 
@@ -27,49 +40,40 @@ NoColor="\033[0m"
 
 
 function check() {
-
     if [[ $? -eq 1 && ${PIPESTATUS[0]} -eq 1 ]]; then
         exit 1
     fi
 }
 
 function get_latest_img() { 
-
     _LATEST_IMAGE_=$(/bin/ls -th $_SCREENSHOT_DIR_ | grep -vE '.screensht.png$' | grep -E '.png$' | head -n 1)
 
     if [[ $( echo "$_LATEST_IMAGE_" | wc -w ) -eq 0 ]]; then
-        # echo -e "${Light_Purple} [ No New Image Detected ] ${NoColor}"
         exit 1
     else
-        # echo -e "${Light_Green} [ Success ] ${Yellow} ($_LATEST_IMAGE_) ${NoColor}"
         _LATEST_IMAGE_="$_SCREENSHOT_DIR_/$_LATEST_IMAGE_"
     fi
 }
 
 function convert() {
-
     _target_file_=$( echo "$_LATEST_IMAGE_" | sed 's/.png/.screensht.png/g'  )
 
     if [[ $_BORDER_SIZE_ -ge 3 ]]; then
-        # printf "%-50s" "**|--[+]*Generate*Image*Info*" | sed 's/ /./g' | sed 's/*/ /g'
         magick convert "$_LATEST_IMAGE_" \
             -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] '"$_ROUNDED_CORNER_"','"$_ROUNDED_CORNER_"''\
             info: > $_SCREENSHOT_DIR_/_rounded_.mvg
         check
 
-        # printf "%-50s" "**|--[+]*Generate*Rounded*Masking*" | sed 's/ /./g' | sed 's/*/ /g'
         magick convert "$_LATEST_IMAGE_" -border $_BORDER_SIZE_ -alpha transparent \
             -background none -fill white -stroke none -strokewidth 0 \
             -draw "@"$_SCREENSHOT_DIR_"/_rounded_.mvg" $_SCREENSHOT_DIR_/_rounded_mask_.png
         check
 
-        # printf "%-50s" "**|--[+]*Generate*Rounded*Overlay*" | sed 's/ /./g' | sed 's/*/ /g'
         magick convert "$_LATEST_IMAGE_" -border $_BORDER_SIZE_ -alpha transparent \
             -background none -fill none -stroke $_FG_COLOR_ -strokewidth $_BORDER_SIZE_ \
             -draw "@"$_SCREENSHOT_DIR_"/_rounded_.mvg" $_SCREENSHOT_DIR_/_rounded_overlay_.png
         check
 
-        # printf "%-50s" "**|--[+]*Set*Rounded*Corner*&*Border*Color*" | sed 's/ /./g' | sed 's/*/ /g'
         magick convert "$_LATEST_IMAGE_" -alpha set -bordercolor none -border $_BORDER_SIZE_  \
             $_SCREENSHOT_DIR_/_rounded_mask_.png -compose DstIn -composite \
             $_SCREENSHOT_DIR_/_rounded_overlay_.png -compose Over -composite \
@@ -77,7 +81,6 @@ function convert() {
         rm -f $_SCREENSHOT_DIR_/_rounded_*
         check
     else
-        # printf "%-50s" "**|--[+]*Set*Rounded*Corner*" | sed 's/ /./g' | sed 's/*/ /g'
         magick convert "$_LATEST_IMAGE_" \( +clone  -alpha extract -draw 'fill black polygon 0,0 0,'"$_ROUNDED_CORNER_"' '"$_ROUNDED_CORNER_"',0 fill white circle '"$_ROUNDED_CORNER_"','"$_ROUNDED_CORNER_"' '"$_ROUNDED_CORNER_"',0' \
         \( +clone -flip \) -compose Multiply -composite \
         \( +clone -flop \) -compose Multiply -composite \
@@ -85,73 +88,46 @@ function convert() {
         check
     fi
 
-    # printf "%-50s" "**|--[+]*Set*Image*Shadow*" | sed 's/ /./g' | sed 's/*/ /g'
     magick convert "$_target_file_" \( +clone -background black -shadow $_SHADOW_SIZE_ \) +swap -background none -layers merge +repage "$_target_file_" \
     && magick convert "$_target_file_" -bordercolor $_BG_COLOR_ -border $_BG_SIZE_ "$_target_file_"
     check
 
-    # printf "%-50s" "**|--[+]*Set*Image*Author*" | sed 's/ /./g' | sed 's/*/ /g'
-    # echo -en "  $_AUTHOR_NAME_  " | magick convert "$_target_file_" -gravity ${_AUTHOR_POST_[0]} -pointsize $_FONT_SIZE_ -fill $_AUTHOR_COLOR_ -undercolor $_FG_COLOR_ -font $_FONT_ -annotate ${_AUTHOR_POST_[1]} @- "$_target_file_" \
-    # >> $_LOG_FILE_ 2>&1 && magick convert "$_target_file_" -gravity South -chop 0x$(( $_BG_SIZE_ / 2 )) "$_target_file_" >> $_LOG_FILE_ 2>&1
-    # check
-
-    # printf "%-50s" "**|--[+]*Add*Top*/*North*BG*" | sed 's/ /./g' | sed 's/*/ /g'
     magick convert "$_target_file_" -gravity North -background $_BG_COLOR_ -splice 0x$(( $_BG_SIZE_ / 2 )) "$_target_file_"
     check
 
-    # printf "%-50s" "**|--[+]*Set*sRGB*Image*Profile*" | sed 's/ /./g' | sed 's/*/ /g'
     magick convert "$_target_file_" -profile /usr/share/color/icc/colord/sRGB.icc "$_target_file_"
     check
 }
 
 function summary() {
-
     _runtime_job_=$(($2-$1))
     hours=$((_runtime_job_ / 3600)); minutes=$(( (_runtime_job_ % 3600) / 60 )); seconds=$(( (_runtime_job_ % 3600) % 60 ))
 
-    # printf "%s %s\n" "  |--[+] Elapsed Time : " "$hours : $minutes : $seconds"
-
     if [[ $3 != "failed" ]]; then
-        # printf "%s %s" "  |--[+] Output File  : " "$_target_file_"
-
         xclip -selection clipboard -t image/png -i $_target_file_ && notify-send -u normal -t 3000 "Awesome-Maim: $_target_file_ Copied"
-        # if [[ $? -eq 0 ]]; then
-            # echo -e "${Light_Green} (Copied to Clipboard) ${NoColor}"
-        # else
-            # echo -e "${Light_Red} (Copy to Clipboard Failed) ${NoColor}"
-        # fi
     fi
-
-    # _error_count_=$(cat $_LOG_FILE_ 2> /dev/null | wc -l)
-    # if [[ $_error_count_ -ge 1 ]]; then
-        # printf "%s ${Light_Red}%s  -->  $_LOG_FILE_ ${NoColor}\n\n" "  |--[+] Error Count  : " $_error_count_
-    # else
-        # printf "%s ${Light_Green}%s  -->  $_LOG_FILE_ ${NoColor}\n\n" "  |--[+] Error Count  : " $_error_count_
-    # fi
 }
 
 function main() {
-
-    # echo -e "\n\n\t\t\t${Light_Blue} AWESOME MAIM ${NoColor}\n"
-    # rm -f $_LOG_FILE_
-    _start_job_=$(date +%s)
-    # echo -e "\n\n${Light_Cyan} [+] SCRENSHOTING ${NoColor}"
-
-    # printf "%-50s" "**|--[+]*Starting*Maim*" | sed 's/ /./g' | sed 's/*/ /g'
-	maim -u -b 3 -m 5 -s ~/pictures/screenshots/$(date '+%Y.%m.%d-%H.%M.%S').png> /dev/null 2>&1
+    _start_job_=$(date +%Y.%m.%d-%H.%M.%S)
+    
+    maim -u -b 3 -m 5 -s $_SCREENSHOT_DIR_\/$_start_job_.png> /dev/null 2>&1
     check
 
-    # printf "%-50s" "**|--[+]*Checking*Latest*Image*" | sed 's/ /./g' | sed 's/*/ /g'
     get_latest_img
 
-    # echo -e "\n\n${Light_Cyan} [+] CONVERTING ${NoColor}"
     convert
 
-    # echo -e "\n\n${Light_Cyan} [+] SUMMARY ${NoColor}"
-	mv $_LATEST_IMAGE_ ~/pictures/screenshots/original/
+	mv $_LATEST_IMAGE_ $_ORIGINAL_DIR_
+    notify-send -i $_ORIGINAL_DIR_\/$_start_job_.png "Screenshot Taken" "saved to ~/p/screenshots"
     _end_job_=$(date +%s)
-    # summary $_start_job_ $_end_job_
 }
+
+
+if [[ ! -d "$_SCREENSHOT_DIR_" || ! -d "$_ORIGINAL_DIR_" ]]; then
+	mkdir -p "$_SCREENSHOT_DIR_"
+    mkdir -p "$_ORIGINAL_DIR_"
+fi
 
 clear
 main

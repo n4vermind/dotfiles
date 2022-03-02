@@ -6,19 +6,15 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- Theme handling library
 local beautiful = require("beautiful")
 
--- Theme library
-local beautiful = require("beautiful")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-
 -- Notifications library
 local naughty = require("naughty")
 
 -- Bling
 local bling = require("lib.bling")
+local playerctl = bling.signal.playerctl.lib()
 
 -- Helpers
-local helpers = require("misc.helpers")
+local helpers = require("helpers")
 
 local keys = {}
 
@@ -30,24 +26,6 @@ mod = "Mod4"
 alt = "Mod1"
 ctrl = "Control"
 shift = "Shift"
-
-
--- Window switcher
---------------------
-
-bling.widget.window_switcher.enable {
-    type = "thumbnail",
-
-    hide_window_switcher_key = "Escape",
-    minimize_key = "n",
-    unminimize_key = "N",
-    kill_client_key = "q",
-    cycle_key = "Tab",
-    previous_key = "Right",
-    next_key = "Left",
-    vim_previous_key = "l",
-    vim_next_key = "h"
-}
 
 
 -- Global key bindings
@@ -75,24 +53,6 @@ keys.globalkeys = gears.table.join(
     end,
     {description = "Spawn launcher", group = "App"}),
 
-    -- Dashboard
-    awful.key({mod}, "z", function()
-        dash_toggle()
-    end,
-    {description = "Toggle dashboard", group = "App"}),
-
-    -- Lock Screen
-    awful.key({mod}, "x", function()
-        lock_screen_show()
-    end,
-    {description = "Toggle lock screen", group = "App"}),
-
-    -- Powermenu
-    -- awful.key({mod}, "x", function()
-    --         powermenu_toggle()
-    --     end,
-    --     {description = "Toggle powermenu", group = "App"}),
-
     -- Hotkeys menu
     awful.key({mod}, "\\",
         hotkeys_popup.show_help,
@@ -103,7 +63,7 @@ keys.globalkeys = gears.table.join(
 
     -- Toggle titlebar
     awful.key({mod}, "t", function()
-        awful.titlebar.toggle(client.focus, beautiful.titlebar_position)
+        awful.titlebar.toggle(client.focus, beautiful.titlebar_pos)
     end,
     {description = "Toggle titlebar", group = "WM"}),
 
@@ -111,7 +71,7 @@ keys.globalkeys = gears.table.join(
     awful.key({mod, shift}, "t", function(c)
         local clients = awful.screen.focused().clients
         for _, c in pairs(clients) do
-            awful.titlebar.toggle(c, beautiful.titlebar_position)
+            awful.titlebar.toggle(c, beautiful.titlebar_pos)
         end
     end,
     {description = "Toggle all titlebar", group = "WM"}),
@@ -273,17 +233,17 @@ keys.globalkeys = gears.table.join(
 
     -- Music
     awful.key({}, "XF86AudioPlay", function()
-        awful.spawn.with_shell("playerctl -p spotify,mpd play-pause")
+        playerctl:play_pause()
     end,
     {description = "Toggle music", group = "Misc"}),
 
     awful.key({}, "XF86AudioPrev", function()
-        awful.spawn.with_shell("playerctl -p spotify,mpd previous")
+        playerctl:previous()
     end,
     {description = "Previous music", group = "Misc"}),
 
     awful.key({}, "XF86AudioNext", function()
-        awful.spawn.with_shell("playerctl -p spotify,mpd next")
+        playerctl:next()
     end,
     {description = "Next music", group = "Misc"}),
 
@@ -394,21 +354,21 @@ keys.clientkeys = gears.table.join(
 for i = 1, 10 do
     keys.globalkeys = gears.table.join(keys.globalkeys,
 
-        -- view workspaces
+        -- View workspaces
         awful.key({mod}, "#" .. i + 9, function()
-            local s = mouse.screen
-            local tag = s.tags[i]
-            if tag then
-                if tag == s.selected_tag then
-                    awful.tag.history.restore()
-                else
-                    tag:view_only()
-                end
-            end
-            awesome.emit_signal("bling::tag_preview::visibility", s, false)
+            helpers.tag_back_and_forth(i)
+            -- local s = mouse.screen
+            -- local tag = s.tags[i]
+            -- if tag then
+            --     if tag == s.selected_tag then
+            --         awful.tag.history.restore()
+            --     else
+            --         tag:view_only()
+            --     end
+            -- end
         end),
 
-        -- move focused client to workspaces
+        -- Move focused client to workspaces
         awful.key({mod, "Shift"}, "#" .. i + 9, function() 
             if client.focus then 
                 local tag = client.focus.screen.tags[i] 
@@ -433,14 +393,6 @@ keys.desktopbuttons = gears.table.join(
         if mymainmenu then
             mymainmenu:hide()
         end
-        if dash.visible then
-            dash_hide()
-        end
-    end),
-
-    -- Middle click
-    awful.button({}, 2, function()
-        dash_toggle()
     end),
 
     -- Right click
@@ -486,7 +438,6 @@ keys.taglistbuttons = gears.table.join(
     -- Move to selected tag
     awful.button({'Any'}, 1, function(t) 
         t:view_only() 
-        awesome.emit_signal("bling::tag_preview::visibility", s, false)
     end),
 
     -- Move focused client to selected tag

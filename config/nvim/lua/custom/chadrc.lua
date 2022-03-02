@@ -1,10 +1,6 @@
--- This is an example chadrc file , its supposed to be placed in /lua/custom dir
--- lua/custom/chadrc.lua
-
 local M = {}
 
--- make sure you maintain the structure of `core/default_config.lua` here,
--- example of changing theme:
+local userPlugins = require "custom.plugins"
 
 M.options = {
     shiftwidth = 4,
@@ -13,7 +9,7 @@ M.options = {
 }
 
 M.ui = {
-   theme = "tomorrow-night",
+   theme = "yami",
 }
 
 M.plugins = {
@@ -22,6 +18,13 @@ M.plugins = {
         dashboard = true,
         better_escape = false,
     },
+
+    default_plugin_config_replace = {
+        feline = "custom.plugins.statusline",
+        bufferline = "custom.plugins.bufferline",
+    },
+
+    install = userPlugins
 }
 
 return M

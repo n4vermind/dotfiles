@@ -13,24 +13,23 @@ local awful = require("awful")
 
 -- Theme handling library
 local beautiful = require("beautiful")
+dpi = beautiful.xresources.apply_dpi
 beautiful.init(gfs.get_configuration_dir() .. "theme/theme.lua")
 
 
 -- User vars
--------------------
+--------------
 
-terminal = "wezterm"
-editor = terminal .. " start " .. os.getenv("EDITOR")
+terminal = "alacritty"
+editor = terminal .. " -e " .. os.getenv("EDITOR")
 browser = "qutebrowser"
 launcher = "rofi -show drun"
-file_manager = terminal .. " start --class file ranger"
-music_client = terminal .. " start --class music ncmpcpp"
+file_manager = terminal .. " --class file -e ranger"
+music_client = terminal .. " --class music -e ncmpcpp"
 
-openweathermap_key = "################################"
-openweathermap_city_id = "#######"
-weather_units = "metric"
-
-lock_screen_password = " "
+openweathermap_key = ""
+openweathermap_city_id = ""
+weather_units = "metric" -- metric or imperial
 
 
 -- Load configuration

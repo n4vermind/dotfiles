@@ -1,6 +1,63 @@
+-- Standard awesome library
+local gears = require("gears")
+local awful = require("awful")
+require("awful.autofocus")
+
+-- Theme handling library
+local beautiful = require("beautiful")
+
+-- Bling
+local bling = require("lib.bling")
+bling.module.flash_focus.enable()
+
+
+-- Desktop
+------------
+
+-- Layouts
+awful.layout.layouts = {
+    awful.layout.suit.floating,
+    awful.layout.suit.tile,
+    awful.layout.suit.max,
+    awful.layout.suit.fair,
+    bling.layout.centered,
+}
+
+awful.screen.connect_for_each_screen(function(s)
+
+    -- Set wallpaper
+    gears.wallpaper.maximized(beautiful.wallpaper, s, false, nil)
+
+    -- Generate wallpaper
+    -- bling.module.tiled_wallpaper("", s, {
+    --     fg = beautiful.xcolor8,
+    --     bg = "#03090b",
+    --     offset_y = 20,
+    --     offset_x = 20,
+    --     font = "Material Icons Round",
+    --     font_size = 12,
+    --     padding = 100,
+    --     zickzack = true
+    -- })
+
+    -- Tag layouts
+    local taglayouts = {
+        awful.layout.suit.floating,
+        awful.layout.suit.max,
+        awful.layout.suit.floating,
+        awful.layout.suit.floating,
+        awful.layout.suit.floating
+    }
+
+    -- Tag names
+    local tagnames = {"1", "2", "3", "4", "5"}
+
+    -- Create all tags at once
+    awful.tag(tagnames, s, taglayouts)
+
+end)
+
 require("main.keys")
-require("main.desktop")
+require("main.ruled")
 require("main.menu")
-require("main.rules")
-require("main.scratch")
 require("main.extras")
