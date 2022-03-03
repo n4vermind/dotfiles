@@ -258,6 +258,10 @@ local music = wibox.widget{
 
 local playerctl = require("lib.bling").signal.playerctl.lib()
 playerctl:connect_signal("metadata", function(_, title, artist, album_path, __, ___, ____)
+    if title == "" then title = "No Title" end
+    if artist == "" then artist = "No Artist" end
+    if album_path == "" then album_path = gears.filesystem.get_configuration_dir() .. "theme/assets/icons/no_music.png" end
+
     music_art:set_image(gears.surface.load_uncached(album_path))
     music_title:set_markup_silently(title)
     music_artist:set_markup_silently(helpers.colorize_text(artist, beautiful.xcolor8))
