@@ -222,4 +222,3 @@ ruled.notification.connect_signal("request::rules", function()
     }
 end)
 
-

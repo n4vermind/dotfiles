@@ -467,3 +467,4 @@ cal_tooltip:setup {
     bg = beautiful.xbackground,
     widget = wibox.container.background
 }
+

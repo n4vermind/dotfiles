@@ -274,6 +274,10 @@ theme.menu_border_color = theme.xcolor0
 theme.menu_submenu = "»  "
 theme.menu_submenu_icon = nil
 
+-- Layout list
+theme.layoutlist_bg_normal = theme.bg_normal
+theme.layoutlist_bg_selected = theme.bg_secondary
+
 -- Hotkey popup
 theme.hotkeys_font = theme.font_name .. "11"
 theme.hotkeys_description_font = theme.font_name .. "9"
@@ -299,3 +303,4 @@ theme.notification_border_radius = dpi(7)
 theme.notification_border_color = theme.xcolor0
 
 return theme
+
