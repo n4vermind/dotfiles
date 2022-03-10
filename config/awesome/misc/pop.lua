@@ -11,9 +11,6 @@ local wibox = require("wibox")
 -- Helpers
 local helpers = require("helpers")
 
--- Keys
-local keys = require("main.keys")
-
 
 -- Pop up
 ------------

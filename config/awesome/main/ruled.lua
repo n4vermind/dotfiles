@@ -14,9 +14,6 @@ local ruled = require("ruled")
 -- Helpers
 local helpers = require("helpers")
 
--- Keys
-local keys = require("main.keys")
-
 -- Get screen geometry
 local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
@@ -34,8 +31,6 @@ ruled.client.connect_signal("request::rules", function()
         properties = {
             focus = awful.client.focus.filter,
             raise = true,
-            keys = keys.clientkeys,
-            buttons = keys.clientbuttons,
             screen = awful.screen.preferred,
             size_hints_honor = false,
             titlebars_enabled = beautiful.titlebar_enabled,
@@ -226,4 +221,5 @@ ruled.notification.connect_signal("request::rules", function()
         },
     }
 end)
+
 

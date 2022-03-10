@@ -11,9 +11,6 @@ local ruled = require("ruled")
 -- Widget library
 local wibox = require("wibox")
 
--- Keys
-local keys = require("main.keys")
-
 -- Helpers
 local helpers = require("helpers")
 
@@ -177,6 +174,26 @@ local music_create_decoration = function (c)
     -- Hide default titlebar
     awful.titlebar.hide(c, beautiful.titlebar_pos)
 
+    -- Buttons for the titlebar
+    local buttons = gears.table.join(
+        -- Left click
+        awful.button({}, 1, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
+        end),
+
+        -- Middle click
+        awful.button({}, 2, nil, function(c) 
+            c:kill() 
+        end),
+
+        -- Right click
+        awful.button({}, 3, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
+
     -- Titlebar
     awful.titlebar(c, { position = "top", size = beautiful.titlebar_size, bg = beautiful.xbackground }):setup {
         {
@@ -190,7 +207,7 @@ local music_create_decoration = function (c)
                         layout = wibox.layout.fixed.horizontal
                     },
                     {
-                        buttons = keys.titlebarbuttons,
+                        buttons = buttons,
                         widget = wibox.widget.textbox("")
                     },
                     layout = wibox.layout.align.horizontal
@@ -203,7 +220,7 @@ local music_create_decoration = function (c)
             widget = wibox.container.background
         },
         {
-            buttons = keys.titlebarbuttons,
+            buttons = buttons,
             widget = wibox.widget.textbox("")
         },
 		layout = wibox.layout.align.horizontal
@@ -295,3 +312,4 @@ ruled.client.connect_signal("request::rules", function()
         callback = music_create_decoration
     }
 end)
+

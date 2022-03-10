@@ -15,30 +15,15 @@ bling.module.flash_focus.enable()
 ------------
 
 -- Layouts
-awful.layout.layouts = {
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.max,
-    awful.layout.suit.fair,
-    bling.layout.centered,
-}
+tag.connect_signal("request::default_layouts", function()
+    awful.layout.append_default_layouts({
+        awful.layout.suit.floating, awful.layout.suit.tile, awful.layout.suit.max, awful.layout.suit.fair,
+        bling.layout.centered, bling.layout.horizontal, bling.layout.mstab, bling.layout.deck
+    })
+end)
 
-awful.screen.connect_for_each_screen(function(s)
-
-    -- Set wallpaper
-    gears.wallpaper.maximized(beautiful.wallpaper, s, false, nil)
-
-    -- Generate wallpaper
-    -- bling.module.tiled_wallpaper("", s, {
-    --     fg = beautiful.xcolor8,
-    --     bg = "#03090b",
-    --     offset_y = 20,
-    --     offset_x = 20,
-    --     font = "Material Icons Round",
-    --     font_size = 12,
-    --     padding = 100,
-    --     zickzack = true
-    -- })
+-- Tags
+screen.connect_signal("request::desktop_decoration", function(s)
 
     -- Tag layouts
     local taglayouts = {
@@ -52,12 +37,22 @@ awful.screen.connect_for_each_screen(function(s)
     -- Tag names
     local tagnames = {"1", "2", "3", "4", "5"}
 
-    -- Create all tags at once
+    -- Each screen has its own tag table.
     awful.tag(tagnames, s, taglayouts)
 
 end)
+
+-- Wallpaper
+screen.connect_signal("request::wallpaper", function(s)
+    gears.wallpaper.maximized(beautiful.wallpaper, s, false, nil)
+end)
+
+
+-- Stuff
+----------
 
 require("main.keys")
 require("main.ruled")
 require("main.menu")
 require("main.extras")
+

@@ -8,9 +8,6 @@ local beautiful = require("beautiful")
 -- Widget library
 local wibox = require("wibox")
 
--- Keys
-local keys = require("main.keys")
-
 -- Helpers
 local helpers = require("helpers")
 
@@ -20,6 +17,26 @@ local helpers = require("helpers")
 
 awful.titlebar.enable_tooltip = false
 client.connect_signal("request::titlebars", function(c)
+
+    -- Buttons for the titlebar
+    local buttons = gears.table.join(
+        -- Left click
+        awful.button({}, 1, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
+        end),
+
+        -- Middle click
+        awful.button({}, 2, nil, function(c) 
+            c:kill() 
+        end),
+
+        -- Right click
+        awful.button({}, 3, function()
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
 
     -- Titlebar setup
 	awful.titlebar(c, {position = beautiful.titlebar_pos, size = beautiful.titlebar_size}):setup {
@@ -35,16 +52,17 @@ client.connect_signal("request::titlebars", function(c)
             widget = wibox.container.margin
         },
         {
-            buttons = keys.titlebarbuttons,
+            buttons = buttons,
             widget = wibox.widget.textbox("")
         },
         {
             awful.titlebar.widget.iconwidget(c),
             margins = dpi(9),
-            buttons = keys.titlebarbuttons,
+            buttons = buttons,
             widget = wibox.container.margin
         },
 		layout = wibox.layout.align.horizontal
 	}
 
 end)
+
