@@ -12,6 +12,35 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 
 
+-- Layout list
+----------------
+
+local ll = awful.widget.layoutlist {
+    -- source = awful.widget.layoutlist.source.default_layouts,
+    spacing = dpi(24),
+    base_layout = wibox.widget {
+        spacing = dpi(24),
+        forced_num_cols = dpi(4),
+        layout = wibox.layout.grid.vertical
+    },
+    widget_template = {
+        {
+            {
+                id = "icon_role",
+                forced_height = dpi(68),
+                forced_width = dpi(68),
+                widget = wibox.widget.imagebox,
+            },
+            margins = dpi(24),
+            widget = wibox.container.margin
+        },
+        id = "background_role",
+        forced_width = dpi(68),
+        forced_height = dpi(68),
+        widget = wibox.container.background
+    }
+}
+
 -- Pop up
 ------------
 
