@@ -18,42 +18,15 @@ local rubato = require("lib.rubato")
 local helpers = require("helpers")
 
 
--- Tag Preview
-----------------
-
-bling.widget.tag_preview.enable {
-    show_client_content = false,  -- Whether or not to show the client content
-    x = 10,                       -- The x-coord of the popup
-    y = 10,                       -- The y-coord of the popup
-    scale = 0.25,                 -- The scale of the previews compared to the screen
-    honor_padding = false,        -- Honor padding when creating widget size
-    honor_workarea = false,       -- Honor work area when creating widget size
-    placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
-        awful.placement.top_left(c, {
-            margins = {
-                top = beautiful.useless_gap,
-                left = beautiful.wibar_width + beautiful.useless_gap
-            }
-        })
-    end,
-    background_widget = wibox.widget {    -- Set a background image (like a wallpaper) for the widget 
-        image = beautiful.wallpaper,
-        horizontal_fit_policy = "fit",
-        vertical_fit_policy   = "fit",
-        widget = wibox.widget.imagebox
-    }
-}
-
-
 -- Task Preview
 ----------------
 
 bling.widget.task_preview.enable {
-    -- x = 20,                    -- The x-coord of the popup
-    -- y = 20,                    -- The y-coord of the popup
-    height = dpi(150),              -- The height of the popup
-    width = dpi(220),               -- The width of the popup
-    placement_fn = function(c) -- Place the widget using awful.placement (this overrides x & y)
+    -- x = 20,
+    -- y = 20,
+    height = dpi(150),
+    width = dpi(220),
+    placement_fn = function(c)
         awful.placement.top_left(c, {
             margins = {
                 top = beautiful.useless_gap,
@@ -87,16 +60,16 @@ bling.widget.window_switcher.enable {
 
 local anim_y = rubato.timed {
     pos = 1090,
-    rate = 60,
+    rate = 120,
     easing = rubato.quadratic,
     intro = 0.1,
-    duration = 0.3,
+    duration = 0.4,
     awestore_compat = true       -- this option must be set to true.
 }
 
 local anim_x = rubato.timed {
-    pos = 2070,
-    rate = 60,
+    pos = 1530,
+    rate = 120,
     easing = rubato.quadratic,
     intro = 0.1,
     duration = 0.3,

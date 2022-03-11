@@ -293,7 +293,7 @@ local music_boxed = create_boxed_widget(music, dpi(110), dpi(110))
 
 -- Stats
 stats_tooltip = wibox({
-    type = "dock",
+    type = "dropdown_menu",
     screen = screen.primary,
     height = dpi(150),
     width = dpi(270),
@@ -421,7 +421,7 @@ local weather_boxed = create_boxed_widget(weather, dpi(50), dpi(70), true)
 
 -- Stats
 cal_tooltip = wibox({
-    type = "dock",
+    type = "dropdown_menu",
     screen = screen.primary,
     height = dpi(150),
     width = dpi(210),

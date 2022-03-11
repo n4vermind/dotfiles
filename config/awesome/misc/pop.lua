@@ -12,35 +12,6 @@ local wibox = require("wibox")
 local helpers = require("helpers")
 
 
--- Layout list
-----------------
-
-local ll = awful.widget.layoutlist {
-    -- source = awful.widget.layoutlist.source.default_layouts,
-    spacing = dpi(24),
-    base_layout = wibox.widget {
-        spacing = dpi(24),
-        forced_num_cols = dpi(4),
-        layout = wibox.layout.grid.vertical
-    },
-    widget_template = {
-        {
-            {
-                id = "icon_role",
-                forced_height = dpi(68),
-                forced_width = dpi(68),
-                widget = wibox.widget.imagebox,
-            },
-            margins = dpi(24),
-            widget = wibox.container.margin
-        },
-        id = "background_role",
-        forced_width = dpi(68),
-        forced_height = dpi(68),
-        widget = wibox.container.background
-    }
-}
-
 -- Pop up
 ------------
 
@@ -62,8 +33,8 @@ local pop_bar = wibox.widget {
 }
 
 local pop = wibox({
-    type = "dock",
-    screen = screen.focused,
+    type = "dropdown_menu",
+    screen = screen.primary,
     height = beautiful.pop_size,
     width = beautiful.pop_size,
     shape = helpers.rrect(beautiful.pop_border_radius - 1),
@@ -135,6 +106,36 @@ awesome.connect_signal("signal::brightness", function(value)
 
     toggle_pop()
 end)
+
+
+-- Layout list
+----------------
+
+local ll = awful.widget.layoutlist {
+    -- source = awful.widget.layoutlist.source.default_layouts,
+    spacing = dpi(24),
+    base_layout = wibox.widget {
+        spacing = dpi(24),
+        forced_num_cols = dpi(4),
+        layout = wibox.layout.grid.vertical
+    },
+    widget_template = {
+        {
+            {
+                id = "icon_role",
+                forced_height = dpi(68),
+                forced_width = dpi(68),
+                widget = wibox.widget.imagebox,
+            },
+            margins = dpi(24),
+            widget = wibox.container.margin
+        },
+        id = "background_role",
+        forced_width = dpi(68),
+        forced_height = dpi(68),
+        widget = wibox.container.background
+    }
+}
 
 -- Popup
 local layout_popup = awful.popup {

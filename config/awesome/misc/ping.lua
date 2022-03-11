@@ -1,9 +1,22 @@
-local awful = require "awful"
-local beautiful = require "beautiful"
-local gears = require "gears"
-local helpers = require "helpers"
-local naughty = require "naughty"
-local wibox = require "wibox"
+-- Standard awesome library
+local gears = require("gears")
+local awful = require("awful")
+
+-- Theme handling library
+local beautiful = require("beautiful")
+
+-- Notification handling library
+local naughty = require("naughty")
+
+-- Widget library
+local wibox = require("wibox")
+
+-- Helpers
+local helpers = require("helpers")
+
+
+-- Notifications
+------------------
 
 naughty.config.defaults.ontop = true
 naughty.config.defaults.screen = awful.screen.focused()
@@ -29,10 +42,7 @@ naughty.config.presets.warn = naughty.config.presets.critical
 
 naughty.connect_signal("request::display", function(n)
     local appicon = n.app_icon
-    local appicon = n.app_icon
-    if not appicon then
-    appicon = beautiful.notification_icon
-    end
+    if not appicon then appicon = beautiful.notification_icon end
     local time = os.date "%H:%M"
 
     local action_widget = {
@@ -129,16 +139,6 @@ naughty.connect_signal("request::display", function(n)
             bg = beautiful.bg_normal,
             margins = beautiful.notification_margin,
         },
-    }
-end)
-
--- Check if awesome encountered an error during startup
-naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification {
-        urgency = "critical",
-        title = "Oops, an error happened" ..
-            (startup and " during startup!" or "!"),
-        message = message
     }
 end)
 

@@ -105,12 +105,7 @@ awful.screen.connect_for_each_screen(function(s)
         }
     }
 
-    local tasklist = wibox.widget {
-        s.mytasklist,
-        -- bg = beautiful.xcolor0,
-        -- shape = helpers.rrect(dpi(5)),
-        widget = wibox.container.background
-    }
+    local tasklist = wibox.container.background(s.mytasklist)
 
     -- Layoutbox
     local layoutbox_buttons = gears.table.join(
@@ -351,13 +346,13 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to wibar
     s.mywibar:setup{
         {
+            start,
             {
-                start,
                 tasklist,
-                spacing = dpi(10),
-                layout = wibox.layout.fixed.vertical
+                top = dpi(10),
+                bottom = dpi(5),
+                widget = wibox.container.margin
             },
-            nil,
             {
                 stats,
                 separator,
@@ -367,7 +362,6 @@ awful.screen.connect_for_each_screen(function(s)
                 spacing = dpi(10),
                 layout = wibox.layout.fixed.vertical
             },
-            expand = "none",
             layout = wibox.layout.align.vertical
         },
         left = dpi(4),
