@@ -9,13 +9,13 @@ M.options = {
 }
 
 M.ui = {
-   theme = "yami",
+   -- theme = "yami",
 }
 
 M.plugins = {
     status = {
         colorizer = true,
-        dashboard = true,
+        alpha = true,
         better_escape = false,
     },
 
